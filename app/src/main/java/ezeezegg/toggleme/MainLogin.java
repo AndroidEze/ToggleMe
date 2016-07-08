@@ -1,5 +1,6 @@
 package ezeezegg.toggleme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,7 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ezeezegg.toggleme.Interfaces.AsyncVolleyResponse;
+import ezeezegg.toggleme.activities.LoggedActivity;
 import ezeezegg.toggleme.constants.Urls;
+import ezeezegg.toggleme.helpers.SharedPreferenceHelper;
 import ezeezegg.toggleme.helpers.VolleyHelper;
 
 public class MainLogin extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AsyncVolleyResponse {
@@ -72,7 +75,6 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
         String password = mPasswordView.getText().toString();
         VolleyHelper volleyHelper = new VolleyHelper(this, Urls.urlLoginToggl, this);
         volleyHelper.makeVolleyRequest(email, password);
-//        makeVolleyRequest(email, password);
     }
 
     @Override
@@ -84,6 +86,9 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
             e.printStackTrace();
         }
         try {
+            SharedPreferenceHelper.setSharedPreferenceBoolean(this, "login", true);
+            Intent myIntent = new Intent(MainLogin.this, LoggedActivity.class);
+            MainLogin.this.startActivity(myIntent);
             Toast.makeText(this, "response: " + parse.getString("since"), Toast.LENGTH_SHORT ).show();
         } catch (JSONException e) {
             e.printStackTrace();

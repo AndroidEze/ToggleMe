@@ -14,7 +14,7 @@ public class SharedPreferenceHelper {
      * @param key - Key to set shared preference
      * @param value - Value for the key
      */
-    static void setSharedPreferenceString(Context context, String key, String value){
+    public static void setSharedPreferenceString(Context context, String key, String value){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
@@ -26,7 +26,7 @@ public class SharedPreferenceHelper {
      * @param key - Key to set shared preference
      * @param value - Value for the key
      */
-    static void setSharedPreferenceInt(Context context, String key, int value){
+    public static void setSharedPreferenceInt(Context context, String key, int value){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(key, value);
@@ -38,7 +38,7 @@ public class SharedPreferenceHelper {
      * @param key - Key to set shared preference
      * @param value - Value for the key
      */
-    static void setSharedPreferenceBoolean(Context context, String key, boolean value){
+    public static void setSharedPreferenceBoolean(Context context, String key, boolean value){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(key, value);
@@ -51,7 +51,7 @@ public class SharedPreferenceHelper {
      * @param defValue - Default value to be returned if shared preference isn't found.
      * @return value - String containing value of the shared preference if found.
      */
-    static String getSharedPreferenceString(Context context, String key, String defValue){
+    public static String getSharedPreferenceString(Context context, String key, String defValue){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         String value = settings.getString(key, defValue);
 
@@ -64,7 +64,7 @@ public class SharedPreferenceHelper {
      * @param defValue - Default value to be returned if shared preference isn't found.
      * @return value - String containing value of the shared preference if found.
      */
-    static int getSharedPreferenceInt(Context context, String key, int defValue){
+    public static int getSharedPreferenceInt(Context context, String key, int defValue){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         int value = settings.getInt(key, defValue);
 
@@ -77,7 +77,7 @@ public class SharedPreferenceHelper {
      * @param defValue - Default value to be returned if shared preference isn't found.
      * @return value - String containing value of the shared preference if found.
      */
-    static boolean getSharedPreferenceBoolean(Context context, String key, boolean defValue){
+    public static boolean getSharedPreferenceBoolean(Context context, String key, boolean defValue){
         SharedPreferences settings = context.getSharedPreferences(PREF_FILE, 0);
         boolean value = settings.getBoolean(key, defValue);
 
