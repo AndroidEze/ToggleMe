@@ -95,6 +95,7 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
         }
         try {
             SharedPreferenceHelper.setSharedPreferenceBoolean(this, "login", true);
+            SharedPreferenceHelper.setSharedPreferenceString(this, "api_token", parse.getString("api_token"));
             Intent myIntent = new Intent(MainLogin.this, LoggedActivity.class);
             MainLogin.this.startActivity(myIntent);
             Toast.makeText(this, "response: " + parse.getString("since"), Toast.LENGTH_SHORT ).show();
