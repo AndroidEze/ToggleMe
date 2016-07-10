@@ -1,5 +1,6 @@
 package ezeezegg.toggleme.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,11 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import ezeezegg.toggleme.R;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class LoggedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import ezeezegg.toggleme.Interfaces.AsyncVolleyResponse;
+import ezeezegg.toggleme.MainLogin;
+import ezeezegg.toggleme.R;
+import ezeezegg.toggleme.constants.Urls;
+import ezeezegg.toggleme.helpers.SharedPreferenceHelper;
+import ezeezegg.toggleme.helpers.VolleyHelper;
+
+public class LoggedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AsyncVolleyResponse{
     private ViewFlipper mainViewFlipper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +74,16 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
 
                 break;
             case R.id.action_logout:
-
+                VolleyHelper volleyHelper = new VolleyHelper(this, Urls.urlLogoutToggl, this);
+                volleyHelper.makeLogutVolley();
                 break;
             default:
                 break;
         }
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -102,4 +110,16 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    @Override
+    public void AsyncVolleyFinish(String response) {
+            SharedPreferenceHelper.setSharedPreferenceBoolean(this, "login", false);
+            Intent myIntent = new Intent(LoggedActivity.this, MainLogin.class);
+            LoggedActivity.this.startActivity(myIntent);
+
+    }
+
+    @Override
+    public void AsyncVolleyError(String error) {
+
+    }
 }

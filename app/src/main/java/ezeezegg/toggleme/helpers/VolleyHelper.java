@@ -30,7 +30,7 @@ public class VolleyHelper {
         this.asyncVolleyResponse = asyncVolleyResponse;
     }
 
-    public void makeVolleyRequest(final String email, final String password) {
+    public void makeLoginVolley(final String email, final String password) {
         StringRequest request =  new StringRequest(Request.Method.GET  , url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -62,6 +62,22 @@ public class VolleyHelper {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleyApplication.getInstance().getRequestQueue().add(request);
+    }
+
+    public void makeLogutVolley() {
+        StringRequest request =  new StringRequest(Request.Method.DELETE  , url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                asyncVolleyResponse.AsyncVolleyFinish(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                asyncVolleyResponse.AsyncVolleyError("error");
+            }
+        });
         request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request);
     }

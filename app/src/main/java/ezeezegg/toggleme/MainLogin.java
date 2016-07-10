@@ -82,7 +82,7 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         VolleyHelper volleyHelper = new VolleyHelper(this, Urls.urlLoginToggl, this);
-        volleyHelper.makeVolleyRequest(email, password);
+        volleyHelper.makeLoginVolley(email, password);
     }
 
     @Override
