@@ -11,13 +11,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ezeezegg.toggleme.MainLogin"
     tools:showIn="@layout/app_bar_main_login">
-
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+    <EditText
+        android:id="@+id/api_token"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     </ScrollView>
 
 

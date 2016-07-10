@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,14 +89,18 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
     @Override
     public void AsyncVolleyFinish(String response) {
         JSONObject parse = null;
+        JSONObject data = null;
+        String api_token = null;
         try {
             parse = new JSONObject(response);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
+            String dataMain = parse.getString("data");
+            data = new JSONObject(dataMain);
             SharedPreferenceHelper.setSharedPreferenceBoolean(this, "login", true);
-            SharedPreferenceHelper.setSharedPreferenceString(this, "api_token", parse.getString("api_token"));
+            SharedPreferenceHelper.setSharedPreferenceString(this, "api_token", data.getString("api_token"));
             Intent myIntent = new Intent(MainLogin.this, LoggedActivity.class);
             MainLogin.this.startActivity(myIntent);
             Toast.makeText(this, "response: " + parse.getString("since"), Toast.LENGTH_SHORT ).show();

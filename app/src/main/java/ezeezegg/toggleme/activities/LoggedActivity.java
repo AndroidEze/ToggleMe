@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -28,6 +29,7 @@ import ezeezegg.toggleme.helpers.VolleyHelper;
 
 public class LoggedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AsyncVolleyResponse{
     private ViewFlipper mainViewFlipper;
+    private EditText apiToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,8 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
         mainViewFlipper = (ViewFlipper) findViewById(R.id.mainViewFlipper);
         mainViewFlipper.setDisplayedChild(1);
+        apiToken =(EditText) findViewById(R.id.api_token);
+        apiToken.setText(SharedPreferenceHelper.getSharedPreferenceString(this,"api_token","not found"));
     }
 
     @Override
