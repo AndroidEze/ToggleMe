@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private Button buttonLogin;
+    private ViewFlipper mainViewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +59,23 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mainViewFlipper = (ViewFlipper) findViewById(R.id.mainViewFlipper);
+        if (SharedPreferenceHelper.getSharedPreferenceBoolean(this, "login", true)) {
+            Intent myIntent = new Intent(MainLogin.this, LoggedActivity.class);
+            MainLogin.this.startActivity(myIntent);
+        } else {
+            mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+            mPasswordView = (EditText) findViewById(R.id.password);
 
-        buttonLogin = (Button) findViewById(R.id.email_sign_in_button);
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
-
+            buttonLogin = (Button) findViewById(R.id.email_sign_in_button);
+            buttonLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    login();
+                }
+            });
+            mainViewFlipper.setDisplayedChild(0);
+        }
     }
 
     private void login() {
