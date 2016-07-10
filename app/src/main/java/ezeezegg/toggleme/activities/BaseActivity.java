@@ -16,7 +16,7 @@ import android.widget.ViewFlipper;
 
 import ezeezegg.toggleme.R;
 
-public class LoggedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ViewFlipper mainViewFlipper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +59,7 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        switch (item.getItemId()) {
-            case R.id.action_settings:
 
-                break;
-            case R.id.action_logout:
-
-                break;
-            default:
-                break;
-        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
