@@ -114,6 +114,16 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
     }
 
     @Override
+    public void AsyncVolleyEntriesResponse(String response) {
+
+    }
+
+    @Override
+    public void AsyncVolleyEntriesError(String error) {
+
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {

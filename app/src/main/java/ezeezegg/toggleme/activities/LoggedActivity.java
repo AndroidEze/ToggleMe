@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,30 +18,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import ezeezegg.toggleme.Interfaces.AsyncVolleyResponse;
 import ezeezegg.toggleme.MainLogin;
 import ezeezegg.toggleme.R;
-import ezeezegg.toggleme.applications.VolleyApplication;
 import ezeezegg.toggleme.constants.Urls;
 import ezeezegg.toggleme.helpers.SharedPreferenceHelper;
 import ezeezegg.toggleme.helpers.VolleyHelper;
+import ezeezegg.toggleme.models.Entries;
 
 public class LoggedActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AsyncVolleyResponse {
+    private Context context;
     private ViewFlipper mainViewFlipper;
     private EditText apiToken;
+    private ArrayList<Entries> entriesArrayList = new ArrayList<Entries>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +133,32 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    public ArrayList<Entries> fillEntries(String response) {
+        JSONArray responseJsonObject = null;
+        try {
+            responseJsonObject = new JSONArray(response);
+            for (int i = 0; i < responseJsonObject.length(); i++) {
+                Entries entrie = new Entries();
+                JSONObject parse = (JSONObject) responseJsonObject.get(i);
+                entrie.setId(Long.parseLong(parse.getString("id")));
+                entrie.setWid(Long.parseLong(parse.getString("wid")));
+                entrie.setPid(Long.parseLong(parse.getString("pid")));
+                entrie.setBillable(parse.getBoolean("billable"));
+                entrie.setStart(parse.getString("start"));
+                entrie.setStop(parse.getString("stop"));
+                entrie.setDuration(Long.parseLong(parse.getString("duration")));
+                entrie.setDescription(parse.getString("description"));
+                //entrie.setStop(parse.getString("tags"));
+                entrie.setAt(parse.getString("at"));
+                entriesArrayList.add(entrie);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return entriesArrayList;
+    }
+
     @Override
     public void AsyncVolleyFinish(String response) {
         SharedPreferenceHelper.setSharedPreferenceBoolean(this, "login", false);
@@ -149,6 +169,18 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public void AsyncVolleyError(String error) {
+
+    }
+
+    @Override
+    public void AsyncVolleyEntriesResponse(String response) {
+        //Toast.makeText(this, "response: " + response, Toast.LENGTH_SHORT ).show();
+        fillEntries(response);
+
+    }
+
+    @Override
+    public void AsyncVolleyEntriesError(String error) {
 
     }
 }

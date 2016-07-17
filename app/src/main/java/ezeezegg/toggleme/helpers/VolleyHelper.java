@@ -87,13 +87,13 @@ public class VolleyHelper {
             @Override
             public void onResponse(String response) {
                 //Toast.makeText(context, "response: " + response, Toast.LENGTH_SHORT ).show();
-                asyncVolleyResponse.AsyncVolleyFinish(response);
+                asyncVolleyResponse.AsyncVolleyEntriesResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //Toast.makeText(context, "ERROR: " + error, Toast.LENGTH_SHORT ).show();
-                asyncVolleyResponse.AsyncVolleyError("error");
+                asyncVolleyResponse.AsyncVolleyEntriesError("error");
             }
         }) {
             @Override

@@ -6,4 +6,6 @@ package ezeezegg.toggleme.Interfaces;
 public interface AsyncVolleyResponse {
     void AsyncVolleyFinish(String response);
     void AsyncVolleyError(String error);
+    void AsyncVolleyEntriesResponse(String response);
+    void AsyncVolleyEntriesError(String error);
 }
