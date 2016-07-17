@@ -90,7 +90,6 @@ public class MainLogin extends AppCompatActivity implements NavigationView.OnNav
     public void AsyncVolleyFinish(String response) {
         JSONObject parse = null;
         JSONObject data = null;
-        String api_token = null;
         try {
             parse = new JSONObject(response);
         } catch (JSONException e) {

@@ -81,4 +81,33 @@ public class VolleyHelper {
         request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleyApplication.getInstance().getRequestQueue().add(request);
     }
+
+    public void getEntriesToggle(final String api_token) {
+        StringRequest request =  new StringRequest(Request.Method.GET  , url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Toast.makeText(context, "response: " + response, Toast.LENGTH_SHORT ).show();
+                asyncVolleyResponse.AsyncVolleyFinish(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Toast.makeText(context, "ERROR: " + error, Toast.LENGTH_SHORT ).show();
+                asyncVolleyResponse.AsyncVolleyError("error");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Authorization",
+                        String.format("Basic %s", Base64.encodeToString(
+                                String.format("%s:%s", api_token, "api_token").getBytes(), Base64.DEFAULT)));
+                params.put("username" , api_token );
+                params.put("password" , "api_token" );
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleyApplication.getInstance().getRequestQueue().add(request);
+    }
 }
