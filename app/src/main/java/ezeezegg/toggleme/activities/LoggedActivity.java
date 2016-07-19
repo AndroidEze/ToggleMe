@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import ezeezegg.toggleme.Interfaces.AsyncVolleyResponse;
 import ezeezegg.toggleme.MainLogin;
 import ezeezegg.toggleme.R;
+import ezeezegg.toggleme.adapters.EntriesAdapter;
 import ezeezegg.toggleme.constants.Urls;
 import ezeezegg.toggleme.helpers.SharedPreferenceHelper;
 import ezeezegg.toggleme.helpers.VolleyHelper;
@@ -68,6 +70,9 @@ public class LoggedActivity extends AppCompatActivity implements NavigationView.
         apiToken.setText(SharedPreferenceHelper.getSharedPreferenceString(this, "api_token", "not found"));
 
         getEntriesToggle();
+        ListView list = (ListView) findViewById(R.id.list_view_entries);
+        EntriesAdapter adapter = new EntriesAdapter(this, (ArrayList<Entries>) entriesArrayList);
+        list.setAdapter(adapter);
     }
 
     private void getEntriesToggle() {
